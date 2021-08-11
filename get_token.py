@@ -2,7 +2,7 @@ import os
 from flask import Flask, json
 
 # read first token and remove from the token file
-token_filename = "tokens_copy.txt"
+token_filename = "tokens.txt"
 
 def pop_token(filename):
   with open(filename, "r+") as f:
@@ -21,4 +21,4 @@ def get_companies():
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(api, host='0.0.0.0', port=5001) 
+    serve(api, host='0.0.0.0', port=5000) 
