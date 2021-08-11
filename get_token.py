@@ -1,37 +1,24 @@
 import os
 from flask import Flask, json
 
-# create a token index file if not exists
-token_index_filename = ".next_token_index"
-if not os.path.exists(token_index_filename):
-  with open(token_index_filename, "w") as f:
-    f.write('0')
+# read first token and remove from the token file
+token_filename = "tokens_copy.txt"
 
-# read tokens
-with open("tokens.txt", "r") as f:
-  tokens = f.read().split("\n")
-
-def get_and_update_next_token_index(filename):
-  
-  # get the current value
-  with open(filename, "r") as f:
-    next_token_index = f.read()
-    next_token_index = int(next_token_index)
-  
-  print(next_token_index)
-  # overwrite with a new value
-  with open(filename, 'w') as f:
-    f.write(str(next_token_index + 1))
-
-  return next_token_index
+def pop_token(filename):
+  with open(filename, "r+") as f:
+    token = f.readline().rstrip('\n')
+    tokens = f.read()
+    f.seek(0)
+    f.write(tokens)
+    f.truncate()
+  return(token)
 
 api = Flask(__name__)
 
 @api.route('/token', methods=['GET'])
 def get_companies():
-  next_token_index = get_and_update_next_token_index(token_index_filename)
-  return json.dumps(tokens[next_token_index])
+  return json.dumps(pop_token(token_filename))
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(api, host='0.0.0.0', port=5000) 
+    serve(api, host='0.0.0.0', port=5001) 
