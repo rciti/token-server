@@ -1,5 +1,6 @@
 import os
 from flask import Flask, json
+from waitress import serve
 
 # read first token and remove from the token file
 token_filename = "tokens.txt"
@@ -20,5 +21,4 @@ def get_token():
   return {"token": pop_token(token_filename)}
 
 if __name__ == '__main__':
-    from waitress import serve
     serve(api, host='0.0.0.0', port=5000)
