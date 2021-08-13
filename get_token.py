@@ -16,9 +16,9 @@ def pop_token(filename):
 api = Flask(__name__)
 
 @api.route('/token', methods=['GET'])
-def get_companies():
-  return json.dumps(pop_token(token_filename))
+def get_token():
+  return {"token": pop_token(token_filename)}
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(api, host='0.0.0.0', port=5000) 
+    serve(api, host='0.0.0.0', port=5000)
