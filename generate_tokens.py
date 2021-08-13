@@ -11,3 +11,7 @@ tokens = [id_generator(nchars) for i in range(1, n_tokens)]
 with open('tokens.txt', 'w') as f:
     for token in tokens:
         f.write("%s\n" % token)
+
+with open('original-tokens.txt', 'w') as f:
+    for token in tokens:
+        f.write("%s\n" % token)
